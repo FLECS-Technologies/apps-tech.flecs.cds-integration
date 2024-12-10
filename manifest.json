@@ -1,37 +1,23 @@
 {
     "$schema": "https://raw.githubusercontent.com/FLECS-Technologies/app-sdk/main/manifest.schema.json",
     "_schemaVersion": "2.0.0",
-    "app": "",
+    "app": "tech.flecs.cds-integration",
     "version": "##VERSION##",
     "revision": "0",
-    "image": "flecs.azurecr.io/",
-    "multiInstance": false,
+    "image": "flecs.azurecr.io/tech.flecs.cds-integration",
+    "multiInstance": true,
     "editor": "",
-    "args": [
-        "--launch-arg-1",
-        "--launch-arg-2=8000"
-    ],
+    "args": [],
     "capabilities": [],
     "conffiles": [
-        "default.conf:/etc/my-app/default.conf",
-        "default.conf:/etc/my-app/default.conf:ro",
-        "default.conf:/etc/my-app/default.conf:rw"
+        "CODESYSControl_User.cfg:/etc/CODESYSControl_User.cfg:rw,init"
     ],
-    "devices": [
-        "/dev/net/tun"
-    ],
-    "env": [
-        "MY_ENV=value"
-    ],
-    "ports": [
-        "12345:12345"
-    ],
+    "devices": [],
+    "env": [],
+    "ports": [],
     "volumes": [
-        "my-app-etc:/etc/my-app",
-        "/var/lib/my-app:/var/lib/my-app"
+        "var:/var/opt/codesys",
+        "etc:/etc"
     ],
-    "labels": [
-        "org.my.label",
-        "org.my.label-with-value=Some custom label value"
-    ]
+    "labels": []
 }
