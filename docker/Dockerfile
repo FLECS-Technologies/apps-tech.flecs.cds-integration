@@ -40,3 +40,15 @@ COPY --from=builder [ \
     "/usr/local/lib/x86_64-linux-gnu/"]
 
 RUN ldconfig
+
+# Add Component to .cfg
+# LINE and CMPNR are coming from awk, parsing all lines starting with Component.X=
+# - LINE is the line where the last Component.X entry is in CODESYSControl_User.cfg
+# - CMPNR is the number X of the last Component.X entry
+# sed will inser a new line after the last Component.X entry with Component.(X+1)=CmpTowerBridge
+RUN  ["/bin/bash", "-c", \
+    "awk '/^Component\\.[0-9]+/ {last=NR; match($0, /\\.[0-9]+=/); cmp=substr($0, RSTART+1, RLENGTH-2)} END {print last, cmp}' /etc/CODESYSControl_User.cfg |\
+    {\n\
+        read -r LINE CMPNR \n\
+        sed -i \"$((LINE+1))i Component.$((CMPNR+1))=CmpTowerBridge\" /etc/CODESYSControl_User.cfg \n\
+    }"]
